@@ -4,7 +4,7 @@
 # SPDX-License-Indentifier: MIT
 # example2.py
 
-from terminalprinter import StyledTerminalPrinter
+from styledterm import StyledTerminalPrinter
 
 
 def main():
