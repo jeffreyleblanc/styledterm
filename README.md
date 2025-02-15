@@ -35,4 +35,7 @@ text = "Colors like [yellow]yellow[/] and [yellow2][bold]YELLOW2[/] are [cyan][i
 P.pp(text)
 ```
 
+![Image of the above code in the terminal](./images/example1-screenshot.png)
+
+
 See the example files for additonal usage.
