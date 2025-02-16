@@ -7,7 +7,7 @@ but is intentionally designed for supporting easier to read output from python p
 "stream" of output on the command line.
 
 
-## Simple Example
+## 1. Simple Example
 
 ```python
 from styledterm import StyledTerminalPrinter
@@ -44,5 +44,5 @@ P.nl()
 
 ![Image of the above code in the terminal](./images/example1-screenshot.png)
 
-
 See the example files for additonal usage.
+

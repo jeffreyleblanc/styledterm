@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "styledterm"
+version = "0.0.1"
+authors = [
+    { name = "Jeffrey LeBlanc", email = "jeffreyleblanc@users.noreply.github.com" },
+]
+description = "Styled Terminal Printing For Python."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["styledterm*"]

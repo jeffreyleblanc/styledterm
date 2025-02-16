@@ -1,0 +1,13 @@
+Source: styledterm
+Section: devel
+Priority: optional
+Maintainer: Jeffrey LeBlanc
+Build-Depends: debhelper-compat (= 13), dh-python, python3-all (>= 3.5), python3-setuptools, python3-build, pybuild-plugin-pyproject
+Standards-Version: 3.9.6
+X-Python3-Version: >= 3.11
+
+Package: python3-styledterm
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}, ${python3:Depends}
+Description: Styled Terminal Printing For Python.

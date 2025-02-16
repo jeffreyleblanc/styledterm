@@ -1,1 +1,13 @@
 *.pyc
+
+# Build Artifacts
+.pybuild/
+build/
+*.deb
+*.egg-info/
+
+# Debian Cruft
+debian/.debhelper/
+debian/python3-styledterm*
+debian/debhelper-build-stamp
+debian/files
