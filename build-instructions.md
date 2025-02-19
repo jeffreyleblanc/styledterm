@@ -40,6 +40,12 @@ $ ( cd /root/styledterm/ && dpkg-buildpackage -b -us -uc )
 $ mv /root/python3-styledterm_*.deb /root/styledterm
 ```
 
+To build the python packages:
+
+```sh
+$ python3 -m build
+```
+
 On the host in the main repository directory you can clean up after with 
 (Note this will remove the `.deb` file as well):
 

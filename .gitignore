@@ -11,3 +11,6 @@ debian/.debhelper/
 debian/python3-styledterm*
 debian/debhelper-build-stamp
 debian/files
+
+# Local releases directory
+_RELEASES/
