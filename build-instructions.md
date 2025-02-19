@@ -50,5 +50,5 @@ On the host in the main repository directory you can clean up after with
 (Note this will remove the `.deb` file as well):
 
 ```sh
-$ git clean -fxd
+$ git clean -fxd -e _RELEASES
 ```
