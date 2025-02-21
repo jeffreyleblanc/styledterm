@@ -8,7 +8,7 @@ from os import get_terminal_size
 from math import floor,ceil
 import pprint
 import re
-from functools import partial
+from functools import partial, wraps
 import json
 
 
@@ -87,6 +87,7 @@ class StyledTerminalPrinter:
     #==> set_global_indent?
 
     def autonewlinewrapper(meth):
+        @wraps(meth)
         def wrapper(self, *args, **kwargs ):
             if self.autonewlines and not self.last_had_newline:
                 print("")
