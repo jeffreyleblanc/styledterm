@@ -7,7 +7,17 @@ but is intentionally designed for supporting easier to read output from python p
 "stream" of output on the command line.
 
 
-## 1. Simple Example
+## 1. Installation
+
+The [Releases Page](https://github.com/jeffreyleblanc/styledterm/releases) contains:
+
+* `.deb` files ( `dpkg -i NAME.deb` )
+* `sdist` and `whl` python packages
+
+sytledterm currently has no dependencies outside the python standard library.
+
+
+## 2. Simple Example
 
 ```python
 from styledterm import StyledTerminalPrinter
@@ -45,4 +55,9 @@ P.nl()
 ![Image of the above code in the terminal](./images/example1-screenshot.png)
 
 See the example files for additonal usage.
+
+
+## 3. Usage API
+
+**Coming soon**
 
