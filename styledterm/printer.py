@@ -160,7 +160,7 @@ class StyledTerminalPrinter:
 
         # Make a regex to find the `[COLOR][STYLE]` and `[/]` markers
         markers = list(self.BASE_COLORS.keys()) + list(self.STYLES.keys()) + ["/"]
-        pattern = rf"(\[(?:{"|".join(markers)})2?\])"
+        pattern = rf"(\[(?:{'|'.join(markers)})2?\])"
 
         # Split the text by regex matches
         parts = re.split(pattern,annotated_text)
@@ -265,7 +265,7 @@ class StyledTerminalPrinter:
             if color is not None:
                 code += self.COLORS[color]
             if styles is not None and len(styles)>0:
-                code += f";{";".join([self.STYLES[s] for s in styles])}"
+                code += f";{';'.join([self.STYLES[s] for s in styles])}"
             return f"\x1b[{code}m{text}\x1b[0m"
 
 
