@@ -8,8 +8,12 @@ from os import get_terminal_size
 from math import floor,ceil
 import pprint
 import re
-from functools import partial
+from functools import partial, wraps
 import json
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 class StyledTerminalPrinter:
@@ -87,6 +91,7 @@ class StyledTerminalPrinter:
     #==> set_global_indent?
 
     def autonewlinewrapper(meth):
+        @wraps(meth)
         def wrapper(self, *args, **kwargs ):
             if self.autonewlines and not self.last_had_newline:
                 print("")
@@ -160,7 +165,7 @@ class StyledTerminalPrinter:
 
         # Make a regex to find the `[COLOR][STYLE]` and `[/]` markers
         markers = list(self.BASE_COLORS.keys()) + list(self.STYLES.keys()) + ["/"]
-        pattern = rf"(\[(?:{"|".join(markers)})2?\])"
+        pattern = rf"(\[(?:{'|'.join(markers)})2?\])"
 
         # Split the text by regex matches
         parts = re.split(pattern,annotated_text)
@@ -265,7 +270,7 @@ class StyledTerminalPrinter:
             if color is not None:
                 code += self.COLORS[color]
             if styles is not None and len(styles)>0:
-                code += f";{";".join([self.STYLES[s] for s in styles])}"
+                code += f";{';'.join([self.STYLES[s] for s in styles])}"
             return f"\x1b[{code}m{text}\x1b[0m"
 
 
@@ -308,3 +313,42 @@ class StyledTerminalPrinter:
         return pprint.pformat(object,indent=indent)
 
 
+class tprint(StyledTerminalPrinter):
+    """
+    Provides a subset of functionality from :class:`SimpleTerminalPrinter`,
+    but adds function chaining.
+
+    Intended as a short-lifetime object that internally handles formatting
+    and prints when :meth:`tprint.__del__` is called automatically.
+    """
+    def __init__(self, /, line=None, *, auto_print=True, **kwargs):
+        super().__init__(**kwargs)
+        logging.debug("init super done")
+        self.auto_print = auto_print
+        self.line = line
+        self.color = None
+        self.styles = []
+
+        for color in self.COLORS.keys():
+            setattr(self, color, partial(self._inner, "color", color))
+        for style in self.STYLES.keys():
+            setattr(self, style, partial(self._inner, "style", style))
+
+        logging.debug("init tprint done")
+
+    def __del__(self):
+        if self.auto_print:
+            self.p(self.line, self.color, self.styles)
+        logging.debug("tprint destroyed")
+
+    def _inner(self, stype, name):
+        if stype == "color":
+            if self.color:
+                raise ValueError("Color is already set")
+            self.color = name
+        elif stype == "style":
+            self.styles.append(name)
+        return self
+
+    def print(self):
+        print(self.line)
