@@ -162,44 +162,7 @@ class StyledTerminalPrinter:
             "[red][bold]Pay Attention!"
         Styled text
         """
-
-        # Make a regex to find the `[COLOR][STYLE]` and `[/]` markers
-        markers = list(self.BASE_COLORS.keys()) + list(self.STYLES.keys()) + ["/"]
-        pattern = rf"(\[(?:{'|'.join(markers)})2?\])"
-
-        # Split the text by regex matches
-        parts = re.split(pattern,annotated_text)
-
-        # Walk the split text assembling the final string
-        text = ""
-        curr_text = None
-        curr_color = None
-        curr_styles = []
-        for part in parts:
-            if part == "":
-                continue
-
-            if part.startswith("[") and part.endswith("]"):
-                code = part[1:-1]
-                if code == "/":
-                    text += self.wrap_in_style(text=curr_text,color=curr_color,styles=curr_styles)
-                    curr_color = None
-                    curr_text = None
-                    curr_styles = []
-                elif code in self.COLORS:
-                    curr_color = code
-                elif code in self.STYLES:
-                    curr_styles.append(code)
-                else:
-                    raise Exception(f"Unknown formatting code: '{code}'")
-            else:
-                if curr_color is None:
-                    text += part
-                else:
-                    curr_text = part
-        if curr_text is not None:
-            # Allows us to not need to end with [/], can be implied
-            text += self.wrap_in_style(text=curr_text,color=curr_color,styles=curr_styles)
+        text = self.process_annotated_text(annotated_text)
 
         if not self.supress_auto_indent and self.curr_auto_indent_level > 0:
             text = self.txt_indent(text,indent=(4*self.curr_auto_indent_level))
@@ -272,6 +235,46 @@ class StyledTerminalPrinter:
             if styles is not None and len(styles)>0:
                 code += f";{';'.join([self.STYLES[s] for s in styles])}"
             return f"\x1b[{code}m{text}\x1b[0m"
+
+    def process_annotated_text(self, annotated_text):
+        # Make a regex to find the `[COLOR][STYLE]` and `[/]` markers
+        markers = list(self.BASE_COLORS.keys()) + list(self.STYLES.keys()) + ["/"]
+        pattern = rf"(\[(?:{'|'.join(markers)})2?\])"
+
+        # Split the text by regex matches
+        parts = re.split(pattern,annotated_text)
+
+        # Walk the split text assembling the final string
+        text = ""
+        curr_text = None
+        curr_color = None
+        curr_styles = []
+        for part in parts:
+            if part == "":
+                continue
+
+            if part.startswith("[") and part.endswith("]"):
+                code = part[1:-1]
+                if code == "/":
+                    text += self.wrap_in_style(text=curr_text,color=curr_color,styles=curr_styles)
+                    curr_color = None
+                    curr_text = None
+                    curr_styles = []
+                elif code in self.COLORS:
+                    curr_color = code
+                elif code in self.STYLES:
+                    curr_styles.append(code)
+                else:
+                    raise Exception(f"Unknown formatting code: '{code}'")
+            else:
+                if curr_color is None:
+                    text += part
+                else:
+                    curr_text = part
+        if curr_text is not None:
+            # Allows us to not need to end with [/], can be implied
+            text += self.wrap_in_style(text=curr_text,color=curr_color,styles=curr_styles)
+        return text
 
 
     #-- Text Formating Tools ------------------------------------------------#
