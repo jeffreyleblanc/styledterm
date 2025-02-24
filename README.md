@@ -59,5 +59,70 @@ See the example files for additonal usage.
 
 ## 3. Usage API
 
-**Coming soon**
+Constructor options for `StyledTerminalPrinter`:
 
+```python
+force_width = None | int    # Forces the width of the printer
+use_styles = bool           # Default True, if False will print with no styling
+autonewlines = True,        # Default True, if True puts newlines around P.Hx statements
+default_header_color = None
+    # Or any other color string
+    "blue"
+    # A dictionary with keys for the headers
+    # "H" is a default for all headers, to make a specific entry "H2", "H3", etc..
+    { "H": "blue", "H2": "red" }
+```
+
+Colors and Styles:
+
+```python
+# Default colors
+black
+red
+green
+yellow
+blue
+magenta
+cyan
+white
+# For each color you can implement the 'bright' color with 2, e.g.
+red2
+
+# Styles
+bold
+lite
+italic
+underline
+blink
+reverse
+```
+
+Methods:
+
+```python
+# Insert a newline
+nl()
+
+# Basic print
+p("text",color="COLOR",styles=["STYLE1",...])
+p("[COLOR STYLE1...]text")
+
+# Print annotated string
+pp("[red][bold]text[/]")
+# Each color and style is within [], and can close a style with [/]
+# If no closing [/], styles to the end of the string
+
+# Headers
+P.H1
+P.H2
+P.H3
+P.H4
+P.HF    # This uses reverse text
+
+# Print horizontal line
+P.line
+
+# Printing json or pure object
+pjson(obj)
+pobj(obj)   # uses pprint.pformat
+```
