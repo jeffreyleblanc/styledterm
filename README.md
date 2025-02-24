@@ -6,6 +6,9 @@ This is **not** intended to be as feature rich as something like [Rich](https://
 but is intentionally designed for supporting easier to read output from python programs that produce a
 "stream" of output on the command line.
 
+A motivation for this library is to support easier to read output from scripts with multiple
+and nested steps.
+
 
 ## 1. Installation
 
@@ -125,4 +128,7 @@ P.line
 # Printing json or pure object
 pjson(obj)
 pobj(obj)   # uses pprint.pformat
+
+# Input line with annotated string
+P.ppinput
 ```

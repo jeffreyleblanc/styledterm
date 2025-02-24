@@ -170,6 +170,13 @@ class StyledTerminalPrinter:
         print(text)
         self.last_had_newline = False
 
+    def ppinput(self, text):
+        print("nnnn")
+        input_text = self.process_annotated_text(text)
+        print(">>",input_text)
+        result = input(input_text)
+        return result
+
 
     #-- Shortcuts ----------------------------------------------------------------#
 

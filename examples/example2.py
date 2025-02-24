@@ -27,5 +27,11 @@ def main():
         P.H4("Example Set One")
         P.HF("Example Set One")
 
+    result = P.ppinput("chose [green][bold]y[/] or [red][bold]n[/]: ")
+    if "y" == result:
+        P.green("Yes!")
+    else:
+        P.red("No!")
+
 if __name__ == "__main__":
     main()
