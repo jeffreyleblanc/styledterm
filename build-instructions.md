@@ -1,6 +1,6 @@
-# Build Instructions
+# Release Building Instructions
 
-## 1. Debian Package Builder
+## 1. Setting Up a Python/Debian Package Builder
 
 Build the container (make sure you are in the root of this repository).
 
@@ -32,24 +32,31 @@ $ apt-get -y install \
     python3-all \
     python3-setuptools \
     pybuild-plugin-pyproject
+```
 
-# Build it
+## 2. Building
+
+Enter the container and build things:
+
+```sh
+podman exec -ti styledterm-builder /bin/bash
+
+# 1. Build the debian package
 $ ( cd /root/styledterm/ && dpkg-buildpackage -b -us -uc )
+# 2. Move the .deb file into _RELEASES
+$ mv /root/python3-styledterm_*.deb /root/styledterm/_RELEASES
 
-# Move the .deb file back into the accessible directory
-$ mv /root/python3-styledterm_*.deb /root/styledterm
-```
-
-To build the python packages:
-
-```sh
-## $ python3 -m build
+# 3. Build the python packages:
 ( cd /root/styledterm/ && python3 -m build )
+# 4. Move the dist files into _RELEASES
+mv /root/styledterm/dist/*.whl /root/styledterm/_RELEASES
+mv /root/styledterm/dist/*.tar.gz /root/styledterm/_RELEASES
 ```
 
-On the host in the main repository directory you can clean up after with 
-(Note this will remove the `.deb` file as well):
+Then on the host:
 
 ```sh
+# 5. Clean up
 $ git clean -fxd -e _RELEASES
 ```
+
