@@ -124,31 +124,14 @@ class StyledTerminalPrinter:
     def nl(self):
         print("")
 
-    def p(self, text, color=None, styles=None, bold=False):
-        # If no styles in the kwargs, check if starts with a style tag
-        if color is None and styles is None:
-            if text.startswith("["):
-                idx = text.find("]")
-                if idx > -1:
-                    _style = text[1:idx]
-                    text = text[idx+1:]
-                    parts = _style.split(" ")
-                    for part in parts:
-                        if part in self.COLORS:
-                            color = part
-                        if part in self.STYLES:
-                            if styles is None: styles = []
-                            styles.append(part)
-        # Set for bold
-        if bold:
-            if styles is None:
-                styles = ["bold"]
-            elif "bold" not in styles:
-                styles.append("bold")
+    def v(self, *args):
+        # Vanilla print option
+        print(*args)
 
+    def p(self, text, color=None, styles=None, bold=False):
         # Style and print
         if self.use_styles:
-            text = self.wrap_in_style(text=text,color=color,styles=styles)
+            text = self.wrap_in_style(text=text,color=color,styles=styles,bold=bold)
             if not self.supress_auto_indent and self.curr_auto_indent_level > 0:
                 text = self.txt_indent(text,indent=(4*self.curr_auto_indent_level))
         print(text)
@@ -229,9 +212,30 @@ class StyledTerminalPrinter:
 
     #-- Color/Style Tools ---------------------------------------------------------#
 
-    def wrap_in_style(self, text=None, color=None, styles=None):
+    def wrap_in_style(self, text=None, color=None, styles=None, bold=False):
         if not self.use_styles:
             return text
+
+        # If no styles in the kwargs, check if starts with a style tag
+        if color is None and styles is None:
+            if text.startswith("["):
+                idx = text.find("]")
+                if idx > -1:
+                    _style = text[1:idx]
+                    text = text[idx+1:]
+                    parts = _style.split(" ")
+                    for part in parts:
+                        if part in self.COLORS:
+                            color = part
+                        if part in self.STYLES:
+                            if styles is None: styles = []
+                            styles.append(part)
+        # Set for bold
+        if bold:
+            if styles is None:
+                styles = ["bold"]
+            elif "bold" not in styles:
+                styles.append("bold")
 
         if color is None and ( styles is None or len(styles)==0 ):
             return text
@@ -282,6 +286,10 @@ class StyledTerminalPrinter:
             # Allows us to not need to end with [/], can be implied
             text += self.wrap_in_style(text=curr_text,color=curr_color,styles=curr_styles)
         return text
+
+    # Shortcut aliases for the above
+    s = wrap_in_style
+    a = process_annotated_text
 
 
     #-- Text Formating Tools ------------------------------------------------#
