@@ -43,7 +43,8 @@ $ mv /root/python3-styledterm_*.deb /root/styledterm
 To build the python packages:
 
 ```sh
-$ python3 -m build
+## $ python3 -m build
+( cd /root/styledterm/ && python3 -m build )
 ```
 
 On the host in the main repository directory you can clean up after with 

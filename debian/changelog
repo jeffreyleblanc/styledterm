@@ -1,5 +1,11 @@
+styledterm (0.0.2) unstable; urgency=medium
+
+  * Modularize the API
+
+ -- Jeffrey LeBlanc <jeffreyleblanc@users.noreply.github.com>  Fri, 07 Mar 2025 14:06:34 -0400
+
 styledterm (0.0.1) unstable; urgency=medium
 
   * Initial Release
 
- -- Jeffrey LeBlanc <jeffreyleblanc@users.noreply.github.com>  Sat, 15 Feb 2023 20:05:22 -0600
+ -- Jeffrey LeBlanc <jeffreyleblanc@users.noreply.github.com>  Sat, 15 Feb 2025 20:05:22 -0400
