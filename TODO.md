@@ -7,6 +7,7 @@
     * [ ] Clearer global methods and setup for indentation etc.
     * [ ] Clean up and document the indentation methods
     * [ ] Document the centering methods
+    * [ ] Move simple under styledterm and document
     * [ ] Make a script that encapsulates building the packages in podman
         * have it take the version and confirm the python and debian and tag match that
         * no need to have it setup the container... possibly a future thing or another project

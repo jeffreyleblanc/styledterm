@@ -11,6 +11,8 @@ import re
 from functools import partial, wraps
 import json
 import logging
+from contextlib import contextmanager
+
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -50,6 +52,8 @@ class StyledTerminalPrinter:
 
         self.supress_auto_indent = False
         self.curr_auto_indent_level = 0
+
+        self._ctx_manager_depth = 0
 
 
     #-- Setup Methods --------------------------------------------------------#
@@ -209,6 +213,58 @@ class StyledTerminalPrinter:
     def pjson(self, obj, obj_indent=4, color=None):
         s = json.dumps(obj,indent=obj_indent)
         self.p(s,color=color)
+
+    #-- Context Base Headers --------------------------------------------------------#
+
+    """
+    Probably a clever way to "manufacture" these methods along lines of `_setup_direct_color_methods`
+    """
+
+    @contextmanager
+    def wH(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        meth = getattr(self,f"H{min(self._ctx_manager_depth,4)}")
+        meth(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+
+    @contextmanager
+    def wH1(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        # print("enter",self._ctx_manager_depth,*args)
+        self.H1(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+        # print("exit",self._ctx_manager_depth,*args)
+
+    @contextmanager
+    def wH2(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        self.H2(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+
+    @contextmanager
+    def wH3(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        self.H3(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+
+    @contextmanager
+    def wH4(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        self.H4(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+
+    @contextmanager
+    def wHF(self,*args,**kwargs):
+        self._ctx_manager_depth += 1
+        self.HF(*args,**kwargs)
+        yield
+        self._ctx_manager_depth -= 1
+
 
     #-- Color/Style Tools ---------------------------------------------------------#
 
