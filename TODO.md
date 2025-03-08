@@ -12,7 +12,10 @@
         * have it take the version and confirm the python and debian and tag match that
         * no need to have it setup the container... possibly a future thing or another project
 * Future:
+    * [ ] Close review of the native `logging` module and how it relates
     * [ ] Add example to show `tprint` functionality
     * [ ] Document the lower level methods
     * [ ] For annotated text, support `[red bold]` in addition to `[red][bold]`
     * [ ] For `p`, support `[red][bold]` in addition to `[red bold]`
+* Ideas:
+    * syntax like: `P.pp("[green]=>","[JP]=>",a_dictionary)` to reduce need for fstrings
