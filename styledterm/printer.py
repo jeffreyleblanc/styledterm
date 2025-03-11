@@ -352,12 +352,19 @@ class tprint(StyledTerminalPrinter):
         for style in self.STYLES.keys():
             setattr(self, style, partial(self._inner, "style", style))
 
+        for x in (1, 2, 3, 4, "F"):
+            setattr(self, f"h{x}".lower(), partial(self._heading, f"H{x}"))
+
         logging.debug("init tprint done")
 
     def __del__(self):
         if self.auto_print:
             self.p(self.line, self.color, self.styles)
         logging.debug("tprint destroyed")
+
+    def _heading(self, level: str) -> None:
+        self.auto_print = False
+        getattr(super(), level)(self.line, color=self.color)
 
     def _inner(self, stype, name):
         if stype == "color":

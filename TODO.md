@@ -1,6 +1,7 @@
 # To Do
 
-* [ ] Add example to show `tprint` functionality
+* [x] Add example to show `tprint` functionality
+* [ ] FIXME: Waiting for `del` to print seems to print out of order
 * [ ] Clean up and document the indentation methods
 * [ ] Document the centering methods
 * [ ] Document the lower level methods
