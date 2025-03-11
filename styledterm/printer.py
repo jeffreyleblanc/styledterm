@@ -357,11 +357,6 @@ class tprint(StyledTerminalPrinter):
 
         logging.debug("init tprint done")
 
-    def __del__(self):
-        if self.auto_print:
-            self.p(self.line, self.color, self.styles)
-        logging.debug("tprint destroyed")
-
     def _heading(self, level: str) -> None:
         self.auto_print = False
         getattr(super(), level)(self.line, color=self.color)
@@ -377,3 +372,8 @@ class tprint(StyledTerminalPrinter):
 
     def print(self):
         print(self.line)
+
+    def __del__(self):
+        if self.auto_print:
+            self.p(self.line, self.color, self.styles)
+        logging.debug("tprint destroyed")
