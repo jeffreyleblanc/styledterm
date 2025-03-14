@@ -404,18 +404,20 @@ class tprint(StyledTerminalPrinter):
         self.styles = []
 
         for color in self.COLORS.keys():
-            setattr(self, color, partial(self._inner, "color", color))
+            setattr(self, color, partial(self._style, "color", color))
         for style in self.STYLES.keys():
-            setattr(self, style, partial(self._inner, "style", style))
+            setattr(self, style, partial(self._style, "style", style))
+
+        for x in (1, 2, 3, 4, "F"):
+            setattr(self, f"h{x}".lower(), partial(self._heading, f"H{x}"))
 
         logging.debug("init tprint done")
 
-    def __del__(self):
-        if self.auto_print:
-            self.p(self.line, self.color, self.styles)
-        logging.debug("tprint destroyed")
+    def _heading(self, level: str) -> None:
+        self.auto_print = False
+        getattr(super(), level)(self.line, color=self.color)
 
-    def _inner(self, stype, name):
+    def _style(self, stype: str, name: str) -> "self":
         if stype == "color":
             if self.color:
                 raise ValueError("Color is already set")
@@ -426,3 +428,8 @@ class tprint(StyledTerminalPrinter):
 
     def print(self):
         print(self.line)
+
+    def __del__(self):
+        if self.auto_print:
+            self.p(self.line, self.color, self.styles)
+        logging.debug("tprint destroyed")
