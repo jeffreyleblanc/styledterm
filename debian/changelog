@@ -1,3 +1,9 @@
+styledterm (0.0.3) unstable; urgency=medium
+
+  * Adding context manager, and cleanup
+
+ -- Jeffrey LeBlanc <jeffreyleblanc@users.noreply.github.com>  Fri, 14 Mar 2025 03:59:05 -0400
+
 styledterm (0.0.2) unstable; urgency=medium
 
   * Modularize the API
