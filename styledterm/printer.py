@@ -214,14 +214,14 @@ class StyledTerminalPrinter:
         s = json.dumps(obj,indent=obj_indent)
         self.p(s,color=color)
 
-    #-- Context Base Headers --------------------------------------------------------#
+    #-- Context Base Section Headers --------------------------------------------------------#
 
     """
     Probably a clever way to "manufacture" these methods along lines of `_setup_direct_color_methods`
     """
 
     @contextmanager
-    def wH(self,*args,**kwargs):
+    def S(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         meth = getattr(self,f"H{min(self._ctx_manager_depth,4)}")
         meth(*args,**kwargs)
@@ -229,7 +229,7 @@ class StyledTerminalPrinter:
         self._ctx_manager_depth -= 1
 
     @contextmanager
-    def wH1(self,*args,**kwargs):
+    def S1(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         # print("enter",self._ctx_manager_depth,*args)
         self.H1(*args,**kwargs)
@@ -238,28 +238,28 @@ class StyledTerminalPrinter:
         # print("exit",self._ctx_manager_depth,*args)
 
     @contextmanager
-    def wH2(self,*args,**kwargs):
+    def S2(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         self.H2(*args,**kwargs)
         yield
         self._ctx_manager_depth -= 1
 
     @contextmanager
-    def wH3(self,*args,**kwargs):
+    def S3(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         self.H3(*args,**kwargs)
         yield
         self._ctx_manager_depth -= 1
 
     @contextmanager
-    def wH4(self,*args,**kwargs):
+    def S4(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         self.H4(*args,**kwargs)
         yield
         self._ctx_manager_depth -= 1
 
     @contextmanager
-    def wHF(self,*args,**kwargs):
+    def SF(self,*args,**kwargs):
         self._ctx_manager_depth += 1
         self.HF(*args,**kwargs)
         yield
