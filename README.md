@@ -22,6 +22,14 @@ sytledterm currently has no dependencies outside the python standard library.
 
 ## 2. Simple Example
 
+To try the examples, from top directory:
+
+```sh
+$ PYTHONPATH=. examples/example5.py
+```
+
+The following show *some* of the functionality:
+
 ```python
 from styledterm import StyledTerminalPrinter
 
@@ -121,6 +129,12 @@ P.H2
 P.H3
 P.H4
 P.HF    # This uses reverse text
+
+# Sections that can be used with `with`, e.g.
+with P.S1("This is the top section"):
+    P.p("hello")
+    with P.S4("Here is a sub section"):
+        P.p("hi again")
 
 # Print horizontal line
 P.line
